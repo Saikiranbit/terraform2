@@ -1,3 +1,19 @@
+- name: Bootstrap Python on Ubuntu backend (u21.local)
+  hosts: backend
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install Python3 and pip3
+      raw: |
+        apt-get update -y
+        apt-get install -y python3 python3-pip
+      changed_when: false
+
+    - name: Reinstall Ansible dependencies using pip3
+      raw: |
+        pip3 install --force-reinstall --break-system-packages ansible six
+      changed_when: false
+
 - name: Common setup (SELinux + firewalld)
   hosts: all
   become: true
