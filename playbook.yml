@@ -3,15 +3,15 @@
   become: true
   gather_facts: false
   tasks:
-    - name: Install Python3 and pip3
+    - name: Install Python3 and pip3 (if not present)
       raw: |
         apt-get update -y
         apt-get install -y python3 python3-pip
       changed_when: false
 
-    - name: Reinstall Ansible dependencies using pip3
+    - name: Ensure required Python libraries are present (safe install)
       raw: |
-        pip3 install --force-reinstall --break-system-packages ansible six
+        pip3 install --upgrade --break-system-packages six
       changed_when: false
 
 - name: Common setup (SELinux + firewalld)
