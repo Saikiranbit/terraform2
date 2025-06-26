@@ -9,10 +9,14 @@
         apt-get install -y python3 python3-pip
       changed_when: false
 
-    - name: Install 'six' module for Python
-      raw: |
-        pip3 install six
-      changed_when: false
+   - name: Install 'six' module using apt
+  ansible.builtin.apt:
+    name: python3-six
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+  become: true
+
 
     - name: Force gathering facts after bootstrapping
       setup:
